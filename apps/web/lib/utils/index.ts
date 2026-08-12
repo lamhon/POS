@@ -1,13 +1,9 @@
-import { type ClassValue, clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
-
 /**
- * Merge Tailwind CSS class names safely.
- * Usage: cn("base-class", condition && "conditional-class")
+ * Re-export cn() from the canonical shadcn path (lib/utils.ts).
+ * shadcn components import from "@/lib/utils" which resolves to lib/utils.ts.
+ * Application code should import from "@/lib/utils/index" for the full util set.
  */
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export { cn } from "../utils";
 
 /**
  * Format a date to a locale string.
