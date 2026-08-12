@@ -1,0 +1,60 @@
+# ========================
+# Environment / Secrets
+# ========================
+.env
+.env.local
+.env.*.local
+*.secret
+
+# ========================
+# Node.js / Next.js
+# ========================
+node_modules/
+.next/
+out/
+dist/
+.npm
+.eslintcache
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ========================
+# .NET / ASP.NET Core
+# ========================
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.DotSettings.user
+TestResults/
+coverage/
+*.opencover.xml
+
+# ========================
+# Build / Coverage
+# ========================
+build/
+coverage/
+*.lcov
+.nyc_output/
+
+# ========================
+# IDE
+# ========================
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================
+# Docker
+# ========================
+docker-compose.override.yml

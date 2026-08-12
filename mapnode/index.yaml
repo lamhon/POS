@@ -1,0 +1,45 @@
+project:
+  id: personal-os
+  name: Personal OS
+  description: >
+    Nền tảng web đa chức năng phục vụ quản lý cá nhân và nghiệp vụ theo module.
+  architecture: modular-monolith
+  frontend: nextjs
+  backend: aspnetcore
+  database: postgresql
+
+nodes:
+  - id: foundation.repository
+    path: .
+    type: architecture
+    status: active
+    description: Root repository structure (F0)
+
+  - id: foundation.frontend
+    path: apps/web
+    type: frontend
+    status: bootstrapped
+    technology: nextjs
+    description: Next.js frontend shell (F1)
+
+  - id: foundation.backend
+    path: apps/api
+    type: backend
+    status: bootstrapped
+    technology: aspnetcore
+    description: ASP.NET Core backend foundation (F2)
+
+  - id: foundation.database
+    path: infrastructure/docker
+    type: infrastructure
+    status: active
+    technology: postgresql
+    description: PostgreSQL via Docker Compose
+
+docs:
+  - id: system-overview
+    path: docs/architecture
+  - id: modules
+    path: docs/modules
+  - id: tasks
+    path: docs/tasks
