@@ -1,0 +1,11 @@
+id: architecture.database
+name: Database Architecture
+description: Database conventions, EF Core configurations, and interceptors.
+path: docs/architecture/04-database-postgresql.md
+type: architecture
+status: active
+relations:
+  - to: foundation.database
+    type: implements
+  - to: foundation.backend
+    type: consumed-by

@@ -1,16 +1,8 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
-
 export default function DashboardPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <p className="mt-2 text-gray-500">
-        Chào mừng đến với Personal OS. Chọn module từ menu bên trái.
-      </p>
+    <div className="space-y-4 border-l border-neutral-800 pl-4">
+      <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+      <p className="text-neutral-400">Welcome to your Personal OS Dashboard.</p>
     </div>
   );
 }

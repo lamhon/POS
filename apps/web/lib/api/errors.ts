@@ -57,9 +57,9 @@ export class NotFoundError extends ApiError {
  */
 export function createApiError(
   status: number,
-  body: { title?: string; detail?: string; code?: string; errors?: Record<string, string[]> }
+  body: { title?: string; detail?: string; code?: string; errors?: Record<string, string[]>; message?: string }
 ): ApiError {
-  const message = body.detail ?? body.title ?? "An error occurred";
+  const message = body.detail ?? body.message ?? body.title ?? "An error occurred";
   const code = body.code ?? "UNKNOWN_ERROR";
 
   switch (status) {

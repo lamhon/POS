@@ -39,6 +39,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -81,6 +87,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --success: oklch(0.627 0.171 142.1);
+  --success-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.717 0.158 54.4);
+  --warning-foreground: oklch(0.145 0 0);
+  --info: oklch(0.609 0.126 221.7);
+  --info-foreground: oklch(0.985 0 0);
 }
 
 .dark {
@@ -115,6 +127,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --success: oklch(0.53 0.145 142.1);
+  --success-foreground: oklch(0.985 0 0);
+  --warning: oklch(0.627 0.138 54.4);
+  --warning-foreground: oklch(0.145 0 0);
+  --info: oklch(0.51 0.106 221.7);
+  --info-foreground: oklch(0.985 0 0);
 }
 
 @layer base {
@@ -127,4 +145,21 @@
   html {
     @apply font-sans;
   }
+}
+
+input[type="date"] {
+  color-scheme: dark;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: var(--radius-md, 6px);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  filter: invert(0.8); /* Make it fit the soft gray theme better */
 }

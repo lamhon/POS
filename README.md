@@ -66,14 +66,17 @@ cp .env.example .env
 docker compose up -d postgres
 
 # 3. Chạy backend
-cd apps/api/src/Api
+cd personal-os/apps/api/src/Api
 dotnet run
 
 # 4. Chạy frontend
-cd apps/web
+cd personal-os/apps/web
 npm install
 npm run dev
 ```
+
+> Email: `admin@personal.os`
+> Mật khẩu: `Admin@1234`
 
 Truy cập:
 - Frontend: http://localhost:3000

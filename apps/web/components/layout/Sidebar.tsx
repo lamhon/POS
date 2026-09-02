@@ -1,49 +1,55 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: "🏠" },
-  { href: "/finance", label: "Tài chính", icon: "💰" },
-  { href: "/personnel", label: "Quân nhân", icon: "🪖" },
-  { href: "/training", label: "Huấn luyện", icon: "🎯" },
-  { href: "/manual", label: "Sổ tay", icon: "📖" },
-  { href: "/tasks", label: "Công việc", icon: "✅" },
-  { href: "/settings", label: "Cài đặt", icon: "⚙️" },
-];
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { navigation } from '@/config/navigation';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-full w-56 flex-col border-r bg-gray-50">
-      <div className="flex h-14 items-center border-b px-4">
-        <span className="text-lg font-semibold tracking-tight">Personal OS</span>
+    <aside className="w-64 border-r border-sidebar-border bg-sidebar hidden md:flex flex-col h-full text-sidebar-foreground">
+      <div className="p-6">
+        <Link href="/dashboard" className="flex items-center space-x-2">
+          <div className="w-8 h-8 bg-sidebar-primary rounded-lg flex items-center justify-center">
+            <span className="text-sidebar-primary-foreground font-bold text-xl">P</span>
+          </div>
+          <span className="text-lg font-bold tracking-tight">Personal OS</span>
+        </Link>
       </div>
-      <nav className="flex-1 overflow-y-auto py-4">
-        <ul className="space-y-1 px-2">
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={[
-                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-700 hover:bg-gray-200 hover:text-gray-900",
-                  ].join(" ")}
-                >
-                  <span>{item.icon}</span>
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+
+      <nav className="flex-1 px-4 space-y-1 overflow-y-auto">
+        {navigation.map((item) => {
+          const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+          const Icon = item.icon;
+
+          return (
+            <Link
+              key={item.href}
+              href={item.disabled ? '#' : item.href}
+              className={cn(
+                'flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors text-sm font-medium',
+                isActive 
+                  ? 'bg-sidebar-accent text-sidebar-accent-foreground' 
+                  : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground',
+                item.disabled && 'opacity-50 cursor-not-allowed'
+              )}
+            >
+              <Icon className={cn('w-5 h-5', isActive ? 'text-sidebar-accent-foreground' : 'text-sidebar-foreground/70')} />
+              <span>{item.title}</span>
+            </Link>
+          );
+        })}
       </nav>
+
+      <div className="p-4 border-t border-sidebar-border flex items-center justify-between">
+        <span className="text-xs text-sidebar-foreground/50">
+          Version 1.0.0
+        </span>
+        <ThemeToggle />
+      </div>
     </aside>
   );
 }

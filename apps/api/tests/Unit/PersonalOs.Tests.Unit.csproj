@@ -11,13 +11,25 @@
 
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="FluentAssertions" Version="8.10.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="8.0.1.2" />
+    <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Domain\PersonalOs.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Application\PersonalOs.Application.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\PersonalOs.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Api\PersonalOs.Api.csproj" />
   </ItemGroup>
 
 </Project>

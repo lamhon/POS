@@ -34,6 +34,7 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
         var (statusCode, title) = exception switch
         {
             ArgumentException => (StatusCodes.Status400BadRequest, "Invalid request"),
+            InvalidOperationException => (StatusCodes.Status400BadRequest, "Invalid operation"),
             UnauthorizedAccessException => (StatusCodes.Status401Unauthorized, "Unauthorized"),
             KeyNotFoundException => (StatusCodes.Status404NotFound, "Resource not found"),
             _ => (StatusCodes.Status500InternalServerError, "An unexpected error occurred")
@@ -47,8 +48,11 @@ public sealed class GlobalExceptionHandler : IExceptionHandler
             Instance = httpContext.Request.Path,
         };
 
-        // Only expose detail in Development — never in production
-        if (_environment.IsDevelopment())
+        if (statusCode < 500)
+        {
+            problemDetails.Detail = exception.Message;
+        }
+        else if (_environment.IsDevelopment())
         {
             problemDetails.Detail = exception.Message;
             problemDetails.Extensions["stackTrace"] = exception.StackTrace;

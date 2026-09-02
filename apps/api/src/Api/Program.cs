@@ -1,38 +1,37 @@
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using PersonalOs.Api.Middleware;
+using PersonalOs.Application.Extensions;
 using PersonalOs.Infrastructure.Extensions;
+using PersonalOs.Infrastructure.Persistence;
 using Serilog;
 using System.Text.Json;
 
 // ──────────────────────────────────────────────
-// Bootstrap Serilog before the host is built so
-// startup errors are captured.
-// ──────────────────────────────────────────────
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
+var builder = WebApplication.CreateBuilder(args);
+
+// ── Serilog ────────────────────────────────
+builder.Host.UseSerilog((context, services, configuration) => configuration
+    .ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Application", "PersonalOs.Api")
+    .WriteTo.Console(outputTemplate:
+        "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}"));
 
 try
 {
     Log.Information("Starting Personal OS API");
 
-    var builder = WebApplication.CreateBuilder(args);
-
-    // ── Serilog ────────────────────────────────
-    builder.Host.UseSerilog((context, services, configuration) => configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .ReadFrom.Services(services)
-        .Enrich.FromLogContext()
-        .Enrich.WithProperty("Application", "PersonalOs.Api")
-        .WriteTo.Console(outputTemplate:
-            "[{Timestamp:HH:mm:ss} {Level:u3}] {SourceContext} {Message:lj}{NewLine}{Exception}"));
-
     // ── Services ───────────────────────────────
     builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
     builder.Services.AddProblemDetails();
 
-    builder.Services.AddControllers();
+    builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        });
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c =>
     {
@@ -44,6 +43,7 @@ try
         });
     });
 
+    builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
     // ── CORS ───────────────────────────────────
@@ -67,6 +67,9 @@ try
     var app = builder.Build();
     // ──────────────────────────────────────────
 
+    // Seed Data
+    await DbInitializer.SeedAsync(app);
+
     app.UseExceptionHandler();
     app.UseSerilogRequestLogging(opts =>
     {
@@ -84,7 +87,11 @@ try
     }
 
     app.UseCors("AllowFrontend");
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
     app.UseAuthorization();
+
     app.MapControllers();
 
     // ── Health Checks ──────────────────────────
@@ -109,7 +116,9 @@ try
 }
 catch (Exception ex) when (ex is not HostAbortedException)
 {
+    Console.WriteLine("STARTUP EXCEPTION: " + ex.ToString());
     Log.Fatal(ex, "Application terminated unexpectedly");
+    throw;
 }
 finally
 {
@@ -135,3 +144,5 @@ static Task WriteHealthResponse(HttpContext context, HealthReport report)
 
     return context.Response.WriteAsync(JsonSerializer.Serialize(response));
 }
+
+public partial class Program { }

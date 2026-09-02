@@ -1,0 +1,79 @@
+name: Automated Testing
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: personal_os_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    # Backend Testing
+    - name: Restore .NET dependencies
+      run: dotnet restore apps/api/PersonalOs.Api.sln
+
+    - name: Build .NET
+      run: dotnet build apps/api/PersonalOs.Api.sln --no-restore
+
+    - name: Run Backend Unit & Integration Tests
+      run: dotnet test apps/api/PersonalOs.Api.sln --no-build --verbosity normal
+      env:
+        ConnectionStrings__DefaultConnection: "Host=localhost;Database=personal_os_test;Username=postgres;Password=password"
+
+    # Frontend Unit Testing
+    - name: Install Node dependencies
+      run: npm ci
+
+    - name: Run Frontend Unit Tests
+      run: npm run test --prefix apps/web
+
+    # E2E Testing with Playwright
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    - name: Build Next.js App for E2E
+      run: npm run build --prefix apps/web
+      
+    - name: Run Playwright tests
+      run: npx playwright test
+      env:
+        CI: true
+
+    - name: Upload Playwright report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 14

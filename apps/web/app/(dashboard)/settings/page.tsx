@@ -1,12 +1,8 @@
-import type { Metadata } from "next";
-
-export const metadata: Metadata = { title: "Cài đặt" };
-
 export default function SettingsPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Cài đặt</h1>
-      <p className="mt-2 text-gray-500">Cài đặt hệ thống sẽ được triển khai tại F4+.</p>
+    <div className="space-y-4 border-l border-neutral-800 pl-4">
+      <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+      <p className="text-neutral-400">Configure your Personal OS preferences.</p>
     </div>
   );
 }

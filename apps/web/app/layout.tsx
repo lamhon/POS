@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Personal OS",
-    template: "%s | Personal OS",
-  },
-  description:
-    "Nền tảng quản lý cá nhân và nghiệp vụ theo module: tài chính, quân nhân, huấn luyện, sổ tay quân sự.",
+  title: "Personal OS",
+  description: "Your personalized operating system",
 };
 
 export default function RootLayout({
@@ -22,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
-      <body className={inter.className}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
     </html>
   );
 }

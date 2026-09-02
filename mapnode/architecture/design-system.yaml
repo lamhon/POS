@@ -1,0 +1,28 @@
+design_system:
+  status: active
+
+  tokens:
+    colors: semantic
+    typography: centralized
+    spacing: centralized
+    radius: centralized
+    shadows: centralized
+    motion: centralized
+
+  themes:
+    - light
+    - dark
+    - system
+
+  components:
+    p0: complete
+    p1: partial
+    p2: planned
+
+  accessibility:
+    target: WCAG-2.2-AA
+
+  responsive:
+    mobile: supported
+    tablet: supported
+    desktop: supported
