@@ -4,36 +4,36 @@ Nền tảng web đa chức năng phục vụ quản lý cá nhân và nghiệp 
 
 ## Các module chính
 
-| Module | Mô tả |
-|---|---|
-| Finance | Quản lý tài chính / chi tiêu cá nhân |
-| Military Personnel | Quản lý quân nhân |
-| Training | Quản lý huấn luyện chiến sĩ |
-| Military Manual | Sổ tay quân sự điện tử |
-| Tasks | Quản lý task / công việc |
-| Notifications | Thông báo |
-| AI Assistant | AI RAG Assistant |
+| Module                    | Mô tả                                |
+|---------------------------|--------------------------------------|
+| Finance                   | Quản lý tài chính / chi tiêu cá nhân |
+| Military Personnel        | Quản lý quân nhân                    |
+| Training                  | Quản lý huấn luyện chiến sĩ          |
+| Military Manual           | Sổ tay quân sự điện tử               |
+| Tasks                     | Quản lý task / công việc             |
+| Notifications             | Thông báo                            |
+| AI Assistant              | AI RAG Assistant                     |
 
 ## Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js 15 · TypeScript · App Router |
-| UI | Tailwind CSS · shadcn/ui |
-| State | Zustand · TanStack Query |
-| Forms | React Hook Form · Zod |
-| Backend | ASP.NET Core · C# · .NET 8 |
-| Architecture | Modular Monolith · Clean Architecture |
-| Database | PostgreSQL · Entity Framework Core |
-| Auth | ASP.NET Core Identity · JWT |
-| Cache | Redis |
-| Storage | MinIO (S3-compatible) |
-| Jobs | Hangfire |
-| Logging | Serilog |
-| API | REST · OpenAPI |
-| Testing | xUnit · Vitest · Playwright |
-| Infrastructure | Docker · Docker Compose · GitHub Actions |
-| AI | LLM API · RAG · pgvector |
+| Layer                 | Technology                                  |
+|-----------------------|---------------------------------------------|
+| Frontend              | Next.js 15 · TypeScript · App Router        |
+| UI                    | Tailwind CSS · shadcn/ui                    |
+| State                 | Zustand · TanStack Query                    |
+| Forms                 | React Hook Form · Zod                       |
+| Backend               | ASP.NET Core · C# · .NET 8                  |
+| Architecture          | Modular Monolith · Clean Architecture       |
+| Database              | PostgreSQL · Entity Framework Core          |
+| Auth                  | ASP.NET Core Identity · JWT                 |
+| Cache                 | Redis                                       |
+| Storage               | MinIO (S3-compatible)                       |
+| Jobs                  | Hangfire                                    |
+| Logging               | Serilog                                     |
+| API                   | REST · OpenAPI                              |
+| Testing               | xUnit · Vitest · Playwright                 |
+| Infrastructure        | Docker · Docker Compose · GitHub Actions    |
+| AI                    | LLM API · RAG · pgvector                    |
 
 ## Cấu trúc Repository
 
